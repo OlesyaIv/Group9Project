@@ -348,7 +348,7 @@ public interface IcrashSystem extends Remote {
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 */
-	public PtBoolean oeAddCoordinator(DtCoordinatorID aDtCoordinatorID,DtLogin aDtLogin,DtPassword aDtPassword) throws RemoteException; 	
+	public PtBoolean oeAddCoordinator(DtCoordinatorID aDtCoordinatorID,DtLogin aDtLogin,DtPassword aDtPassword, DtPhoneNumber aDtPhoneNumber) throws RemoteException; 	
 	
 	/**
 	 * Deletes a coordinator with the details specified.

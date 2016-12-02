@@ -292,7 +292,7 @@ public class ICrashAdminGUIController extends AbstractAuthGUIController {
 						DtCoordinatorID coordID = new DtCoordinatorID(new PtString(txtfldUserID.getText()));
 						switch(type){
 						case Add:
-							if (userController.oeAddCoordinator(txtfldUserID.getText(), txtfldUserName.getText(), psswrdfldPassword.getText()).getValue()){
+							if (userController.oeAddCoordinator(txtfldUserID.getText(), txtfldUserName.getText(), psswrdfldPassword.getText(),txtfldUserPhone.getText()).getValue()){
 								listOfOpenWindows.add(new CreateICrashCoordGUI(coordID, systemstateController.getActCoordinator(txtfldUserName.getText())));
 								anchrpnCoordinatorDetails.getChildren().remove(grdpn);
 							}

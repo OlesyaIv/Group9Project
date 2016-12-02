@@ -29,6 +29,9 @@ public abstract class CtAuthenticated implements Serializable {
 	/**  The user's password. */
 	public DtPassword pwd;
 	
+	/**  The user's phone. */
+	public DtPhoneNumber phn;
+	
 	/**  A check to see if the current Ct class is considered logged into the system. */
 	public PtBoolean vpIsLogged;	
 	

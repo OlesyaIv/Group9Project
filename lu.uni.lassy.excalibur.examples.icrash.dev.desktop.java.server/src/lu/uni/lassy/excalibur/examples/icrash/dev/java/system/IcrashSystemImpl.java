@@ -1190,7 +1190,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem#oeAddCoordinator(lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCoordinatorID, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword)
 	 */
 	public PtBoolean oeAddCoordinator(DtCoordinatorID aDtCoordinatorID,
-			DtLogin aDtLogin, DtPassword aDtPassword) throws RemoteException {
+			DtLogin aDtLogin, DtPassword aDtPassword, DtPhoneNumber aDtPhoneNumber) throws RemoteException {
 		try {
 			//PreP1
 			isSystemStarted();
@@ -1205,7 +1205,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 
 			//PostF2
 			CtCoordinator ctCoordinator = new CtCoordinator();
-			ctCoordinator.init(aDtCoordinatorID, aDtLogin, aDtPassword);
+			ctCoordinator.init(aDtCoordinatorID, aDtLogin, aDtPassword, aDtPhoneNumber);
 			DbCoordinators.insertCoordinator(ctCoordinator);
 			
 			
@@ -1263,7 +1263,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 	 * It is worth noticing that such system operation is not used anywhere for the moment (not even included in the class' interface)
 	 * 
 	 * */
-	public PtBoolean oeUpdateCoordinator(DtCoordinatorID aDtCoordinatorID,DtLogin aDtLogin,DtPassword aDtPassword) throws java.rmi.RemoteException{
+	public PtBoolean oeUpdateCoordinator(DtCoordinatorID aDtCoordinatorID,DtLogin aDtLogin,DtPassword aDtPassword,DtPhoneNumber aDtPhoneNumber) throws java.rmi.RemoteException{
 		try {
 			//PreP1
 			isSystemStarted();
@@ -1273,8 +1273,8 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			if (ctAuth != null && ctAuth instanceof CtCoordinator){
 				CtCoordinator aCtCoordinator = (CtCoordinator)ctAuth;
 				CtCoordinator oldCoordinator = new CtCoordinator();
-				oldCoordinator.init(aCtCoordinator.id, aCtCoordinator.login, aCtCoordinator.pwd);
-				aCtCoordinator.update(aDtLogin, aDtPassword);
+				oldCoordinator.init(aCtCoordinator.id, aCtCoordinator.login, aCtCoordinator.pwd, aCtCoordinator.phn);
+				aCtCoordinator.update(aDtLogin, aDtPassword,aDtPhoneNumber);
 				if (DbCoordinators.updateCoordinator(aCtCoordinator).getValue()){
 					cmpSystemCtAuthenticated.remove(oldCoordinator.login.value.getValue());
 					cmpSystemCtAuthenticated.put(aCtCoordinator.login.value.getValue(), aCtCoordinator);
@@ -1283,7 +1283,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 					return new PtBoolean(true);
 				}
 				else
-					aCtCoordinator.update(oldCoordinator.login, oldCoordinator.pwd);
+					aCtCoordinator.update(oldCoordinator.login, oldCoordinator.pwd,oldCoordinator.phn);
 			}
 			return new PtBoolean(false);
 		} catch (Exception e) {
@@ -1360,4 +1360,5 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements
 			return new PtBoolean(false);
 		}
 	}
+
 }
