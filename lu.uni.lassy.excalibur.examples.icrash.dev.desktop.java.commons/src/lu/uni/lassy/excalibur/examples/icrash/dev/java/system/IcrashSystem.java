@@ -35,7 +35,9 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCr
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtGPSLocation;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneCode;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtQualityDataset;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtAlertStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisStatus;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCrisisType;
@@ -96,6 +98,13 @@ public interface IcrashSystem extends Remote {
 	 */
 	public CtState getCtState() throws RemoteException; 
 	
+	/**
+	 * Gets the class type of the quality dataset, contains three estimates of ensurance.
+	 *
+	 * @return the dataset currently used by system
+	 * @throws RemoteException 
+	 */
+	public DtQualityDataset getQualityDataset() throws RemoteException;
 	/**
 	 * Gets a random class type coordinator from the system.
 	 *
@@ -329,7 +338,16 @@ public interface IcrashSystem extends Remote {
 	 * @return The success of the method
 	 * @throws RemoteException Thrown if the server is offline
 	 */
-	public PtBoolean oeLogin(DtLogin aDtLogin,DtPassword aDtPassword) throws RemoteException; 
+	public PtBoolean oeLogin(DtLogin aDtLogin,DtPassword aDtPassword) throws RemoteException;
+	/**
+	 * Processes a login for the username and password specified.
+	 *
+	 * @param aDtLogin The the phone code to login with
+	 * @param aDtPhoneCode The phone code to login with
+	 * @return The success of the method
+	 * @throws RemoteException Thrown if the server is offline
+	 */
+	public PtBoolean oeLoginByCode(DtLogin aDtLogin, DtPhoneCode aDtCode) throws RemoteException; 
 	
 	/**
 	 * Processes a logout for the current authenticating actor.

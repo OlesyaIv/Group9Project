@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.*;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneCode;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtQualityDataset;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtString;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.utils.Log4JUtils;
@@ -61,6 +63,9 @@ public abstract class ActProxyAuthenticatedImpl extends UnicastRemoteObject impl
 	public DtLogin getLogin() throws RemoteException{
 		return this.getServerSideActor().getLogin();
 	}
+	public DtPhoneCode getCode() throws RemoteException{
+		return this.getServerSideActor().getCode();
+	}
 	
 	/* (non-Javadoc)
 	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.HasServerSideActor#destroy()
@@ -76,6 +81,12 @@ public abstract class ActProxyAuthenticatedImpl extends UnicastRemoteObject impl
 	 */
 	public PtBoolean oeLogin(DtLogin aDtLogin,DtPassword aDtPassword)  throws RemoteException, NotBoundException{
 		return this._serverSideActor.oeLogin(aDtLogin, aDtPassword);
+	}
+	/* (non-Javadoc)
+	 * @see lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActProxyAuthenticated#oeLoginByCode(lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin, lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword)
+	 */
+	public PtBoolean oeLoginByCode(DtLogin aDtLogin,DtPhoneCode aDtCode)  throws RemoteException, NotBoundException{
+		return this._serverSideActor.oeLoginByCode(aDtLogin, aDtCode);
 	}
 	
 	/* (non-Javadoc)

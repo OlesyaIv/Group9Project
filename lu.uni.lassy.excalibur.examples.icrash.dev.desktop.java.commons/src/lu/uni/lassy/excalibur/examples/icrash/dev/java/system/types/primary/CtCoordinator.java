@@ -36,7 +36,7 @@ public class CtCoordinator extends CtAuthenticated {
 	 * @return The success of the initialisation
 	 */
 	public PtBoolean init(DtCoordinatorID aId,DtLogin aLogin,DtPassword aPwd,DtPhoneNumber aPhn){
-			super.init(aLogin, aPwd);
+			super.init(aLogin, aPwd, aPhn);
 			id = aId;
 			phn=aPhn;
 			return new PtBoolean(true); 

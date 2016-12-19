@@ -15,13 +15,7 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Optional;
-import java.util.Random;
 import java.util.ResourceBundle;
-
-import javax.swing.JDialog;
-
-import org.jfree.ui.RefineryUtilities;
-
 import javafx.util.Callback;
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.CoordinatorController;
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.exceptions.IncorrectActorException;
@@ -29,7 +23,6 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.controller.exceptions.Incorrec
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.exceptions.ServerNotBoundException;
 import lu.uni.lassy.excalibur.examples.icrash.dev.controller.exceptions.ServerOfflineException;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActCoordinator;
-import lu.uni.lassy.excalibur.examples.icrash.dev.java.environment.actors.ActProxyAuthenticated.UserType;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.design.JIntIsActor;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtAlert;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.CtCrisis;
@@ -38,7 +31,6 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.EtCr
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.utils.Log4JUtils;
 import lu.uni.lassy.excalibur.examples.icrash.dev.model.Message;
-import lu.uni.lassy.excalibur.examples.icrash.dev.model.SMSmessage;
 import lu.uni.lassy.excalibur.examples.icrash.dev.model.actors.ActProxyCoordinatorImpl;
 import lu.uni.lassy.excalibur.examples.icrash.dev.view.gui.abstractgui.AbstractAuthGUIController;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -474,22 +466,18 @@ public class ICrashCoordGUIController extends AbstractAuthGUIController {
 				
 				if (userController.oeLogin(txtfldCoordLogonUserName.getText(), psswrdfldCoordLogonPassword.getText()).getValue())
 				{
-					
-					
 					txtfldPhoneCode.setVisible(true);
 					//NEW CHANGES
 					loginChecked=true;
 					txtfldCoordLogonUserName.setEditable(false);
 					psswrdfldCoordLogonPassword.setEditable(false);
-					currentCode = String.valueOf(new Random(System.currentTimeMillis()).nextInt(9999 - 1000) + 1000);
-					JDialog codeMessage = new SMSmessage("NEW SMS", "text",currentCode);
+					//currentCode = String.valueOf(new Random(System.currentTimeMillis()).nextInt(9999 - 1000) + 1000);
+					/* JDialog codeMessage = new SMSmessage("NEW SMS", "text",currentCode);
 					codeMessage.pack( );        
 				    RefineryUtilities.centerFrameOnScreen( codeMessage ); 
-					codeMessage.setVisible(true);
+					codeMessage.setVisible(true);  */
 					txtfldPhoneCode.setVisible(true);
-					}
-					
-					       
+					}      
 				}
 			catch (ServerOfflineException | ServerNotBoundException e) {
 				showExceptionErrorMessage(e);
@@ -500,25 +488,33 @@ public class ICrashCoordGUIController extends AbstractAuthGUIController {
 	}
 	else
 	{
-		if(checkCode())
-		{
-			txtfldCoordLogonUserName.setEditable(true);
-			psswrdfldCoordLogonPassword.setEditable(true);
-			if (userController.getUserType() == UserType.Coordinator){
+		try {
+			if(checkCode())
+			{
+				txtfldCoordLogonUserName.setEditable(true);
+				psswrdfldCoordLogonPassword.setEditable(true);
 				logonShowPanes(true);
 			}
+		} catch (ServerOfflineException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	}
-	public boolean checkCode() {
-		if (txtfldPhoneCode.getText().equals(currentCode))
-		{
-			return true;
+	
+	public boolean checkCode() throws ServerOfflineException {
+		
+		try{
+			if(userController.oeLoginByCode(txtfldCoordLogonUserName.getText(), txtfldPhoneCode.getText()).getValue())
+			{
+				return true;
+			}
+		} catch (ServerNotBoundException e) {
+			showExceptionErrorMessage(e);
+		} catch (NullPointerException e) {
+			showExceptionErrorMessage(e);
 		}
-		else
-		{
 		return false;
-		}
 	}
 
 	/* (non-Javadoc)
@@ -529,6 +525,7 @@ public class ICrashCoordGUIController extends AbstractAuthGUIController {
 		try {
 			if (userController.oeLogout().getValue()){
 				logonShowPanes(false);
+				loginChecked=false;
 			}
 		} catch (ServerOfflineException | ServerNotBoundException e) {
 			showExceptionErrorMessage(e);

@@ -20,6 +20,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCo
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtQualityDataset;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 
 /**
@@ -72,6 +73,15 @@ public interface ActProxyAdministrator extends ActProxyAuthenticated {
 	 * @throws RemoteException Thrown if the server is offline
 	 */
 	public PtBoolean ieCoordinatorUpdated() throws RemoteException;
+	
+	/**
+	 * A quality dataset from the server side actor saying the coordinator was updated.
+	 *
+	 * @return The dataset with estimates
+	 * @throws RemoteException Thrown if the server is offline
+	 * @throws NotBoundException 
+	 */
+	public DtQualityDataset getQualityDataset() throws RemoteException, NotBoundException;
 	
 	
 }

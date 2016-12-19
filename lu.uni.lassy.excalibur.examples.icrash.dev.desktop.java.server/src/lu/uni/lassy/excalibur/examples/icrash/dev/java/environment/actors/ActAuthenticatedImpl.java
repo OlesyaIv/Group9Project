@@ -24,6 +24,7 @@ import java.util.List;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.IcrashSystem;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneCode;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtString;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.utils.Log4JUtils;
@@ -44,7 +45,7 @@ public abstract class ActAuthenticatedImpl extends UnicastRemoteObject
 
 	/** The login of the class type associated with this actor. */
 	private DtLogin login;
-	
+	private DtPhoneCode code;
 	/**
 	 * Instantiates a new server side actor of type authenticated.
 	 *
@@ -54,6 +55,7 @@ public abstract class ActAuthenticatedImpl extends UnicastRemoteObject
 	public ActAuthenticatedImpl(DtLogin n) throws RemoteException {
 		super(RmiUtils.getInstance().getPort());
 		this.login = n;
+		this.code = null;
 		
 	}
 	
@@ -62,6 +64,12 @@ public abstract class ActAuthenticatedImpl extends UnicastRemoteObject
 	 */
 	public DtLogin getLogin() {
 		return login;
+	}
+	public DtPhoneCode getCode() {
+		return code;
+	}
+	public void setCode(DtPhoneCode aDtCode) {
+		code=aDtCode;
 	}
 
 	/* (non-Javadoc)
@@ -83,6 +91,28 @@ public abstract class ActAuthenticatedImpl extends UnicastRemoteObject
 
 		log.info("message ActAuthenticated.oeLogin sent to system");
 		PtBoolean res = iCrashSys_Server.oeLogin(aDtLogin, aDtPassword);
+
+		if (res.getValue() == true)
+			log.info("operation oeLogin successfully executed by the system");
+
+		return res;
+	}
+	synchronized public PtBoolean oeLoginByCode(DtLogin aDtLogin,
+			DtPhoneCode aDtCode) throws RemoteException, NotBoundException {
+
+		Logger log = Log4JUtils.getInstance().getLogger();
+
+		Registry registry = LocateRegistry.getRegistry(RmiUtils.getInstance().getHost(),RmiUtils.getInstance().getPort());
+
+		//Gathering the remote object as it was published into the registry
+		IcrashSystem iCrashSys_Server = (IcrashSystem) registry
+				.lookup("iCrashServer");
+
+		//set up ActAuthenticated instance that performs the request
+		iCrashSys_Server.setCurrentRequestingAuthenticatedActor(this);
+
+		log.info("message ActAuthenticated.oeLoginByCode sent to system");
+		PtBoolean res = iCrashSys_Server.oeLoginByCode(aDtLogin, aDtCode);
 
 		if (res.getValue() == true)
 			log.info("operation oeLogin successfully executed by the system");

@@ -48,6 +48,7 @@ public class LaunchServer {
 			log.info("*************************************************");
 			log.info("--- Create iCrashSys_Server Remote Object");
 			IcrashSystem iCrashSys_Server_RO = IcrashSystemImpl.getInstance(RmiUtils.getInstance().getPort());
+			//if(!iCrashSys_Server_RO.oeLoginByCode(new DtLogin(new PtString("kekerer")), new DtPhoneCode(new PtString("1313"))).getValue())
 			log.info("--- Bind iCrashSys_Server Remote Object");
 			registry.rebind("iCrashServer", iCrashSys_Server_RO);
 	    	log.info("--- ICrash Server ready and running ...");

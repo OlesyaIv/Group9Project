@@ -18,7 +18,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField id="txtfldNumberOfComComp" fx:id="txtfldNumberOfComComp" text="4" GridPane.columnIndex="1" />
+            <TextField id="txtfldNumberOfComComp" fx:id="txtfldNumberOfComComp" text="1" GridPane.columnIndex="1" />
             <Label text="Number of communication companies to create" wrapText="true" />
             <Button id="bttnCreateSystemAndEnvir" fx:id="bttnCreateSystemAndEnvir" defaultButton="true" mnemonicParsing="false" onAction="#bttnCreateSystemAndEnvir_OnClick" text="Create system and environment" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>

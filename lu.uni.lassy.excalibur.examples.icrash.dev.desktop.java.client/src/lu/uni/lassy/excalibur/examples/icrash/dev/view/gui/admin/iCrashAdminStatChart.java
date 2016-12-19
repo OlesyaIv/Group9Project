@@ -1,5 +1,10 @@
 package lu.uni.lassy.excalibur.examples.icrash.dev.view.gui.admin;
 
+import java.awt.Button;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JDialog;
 
 import org.jfree.chart.ChartFactory;
@@ -9,30 +14,41 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtQualityDataset;
+
 public class iCrashAdminStatChart extends JDialog {
 
-	 public iCrashAdminStatChart( String applicationTitle , String chartTitle )
-	   {
-	      super( );        
-	      
-		 JFreeChart barChart = ChartFactory.createBarChart(chartTitle,"Category","Score",createDataset(),PlotOrientation.VERTICAL,true,true,false);
-		         
-		      ChartPanel chartPanel = new ChartPanel( barChart );        
-		      chartPanel.setPreferredSize(new java.awt.Dimension( 560 , 367 ) );        
-		      setContentPane( chartPanel ); 
-	 }
-	   private CategoryDataset createDataset( )
-	   {
-	      final String satisfaction = "SATISFACTION";        
-	      final String maintenance = "MAINTENANCE";        
-	      final String timeout = "TIMEOUT";        
-	      final String period = "period";          
-	      final DefaultCategoryDataset dataset = new DefaultCategoryDataset( );  
+	JFreeChart barChart;
+	DefaultCategoryDataset dataset;
+	final String satisfaction = "SATISFACTION";
+	final String maintenance = "MAINTENANCE";
+	final String timeout = "TIMEOUT";
+	final String period = "Satisfaction bars";
+	double sat;
+	double maince;
+	double time;
+	Button but;
 
-	      dataset.addValue( 8.0 , satisfaction , period);                 
-	      dataset.addValue( 3.0 , maintenance , period );        
-	      dataset.addValue( 5.0 , timeout , period );                    
+	public iCrashAdminStatChart(String applicationTitle, String chartTitle, DtQualityDataset aDtQualityDataset) {
+		super();
+		dataset = new DefaultCategoryDataset();
+		dataset.addValue(aDtQualityDataset.satisfaction.getValue(), satisfaction, period);
+		dataset.addValue(aDtQualityDataset.maintenance.getValue(), maintenance, period);
+		dataset.addValue(aDtQualityDataset.timeout.getValue(), timeout, period);
+		but = new Button("Refresh");
+		barChart = ChartFactory.createBarChart(chartTitle, "Category", "Score", dataset, PlotOrientation.VERTICAL, true,
+				true, false);
+		ChartPanel chartPanel = new ChartPanel(barChart);
+		// chartPanel.setLayout(new GridLayout());
+		chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
+		chartPanel.add(but);
+		setContentPane(chartPanel);
 
-	      return dataset; 
-	   }
+	}
+
+	public void updateDataset(DtQualityDataset aDtQualityDataset) {
+		dataset.setValue(aDtQualityDataset.satisfaction.getValue(), satisfaction, period);
+		dataset.setValue(aDtQualityDataset.maintenance.getValue(), maintenance, period);
+		dataset.setValue(aDtQualityDataset.timeout.getValue(), timeout, period);
+	}
 }

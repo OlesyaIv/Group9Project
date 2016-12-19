@@ -32,6 +32,9 @@ public abstract class CtAuthenticated implements Serializable {
 	/**  The user's phone. */
 	public DtPhoneNumber phn;
 	
+	/**  The user's code. */
+	public DtPhoneCode code;
+	
 	/**  A check to see if the current Ct class is considered logged into the system. */
 	public PtBoolean vpIsLogged;	
 	
@@ -42,9 +45,10 @@ public abstract class CtAuthenticated implements Serializable {
 	 * @param aPwd The password of the user
 	 * @return The success of the initialisation of the user
 	 */
-	public PtBoolean init(DtLogin aLogin, DtPassword aPwd){
+	public PtBoolean init(DtLogin aLogin, DtPassword aPwd, DtPhoneNumber aPhn){
 			login = aLogin;
 			pwd = aPwd;
+			phn = aPhn;
 			vpIsLogged = new PtBoolean(false);
 			return new PtBoolean(true); 
 	}

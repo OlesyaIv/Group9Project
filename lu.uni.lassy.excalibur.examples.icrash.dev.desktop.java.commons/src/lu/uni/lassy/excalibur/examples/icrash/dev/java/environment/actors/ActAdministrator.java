@@ -19,6 +19,7 @@ import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtCo
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtLogin;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPassword;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtPhoneNumber;
+import lu.uni.lassy.excalibur.examples.icrash.dev.java.system.types.primary.DtQualityDataset;
 import lu.uni.lassy.excalibur.examples.icrash.dev.java.types.stdlib.PtBoolean;
 
 /**
@@ -39,7 +40,7 @@ public interface ActAdministrator extends ActAuthenticated {
 	public PtBoolean oeAddCoordinator(DtCoordinatorID aDtCoordinatorID,
 			DtLogin aDtLogin, DtPassword aDtPassword, DtPhoneNumber aDtPhoneNumber) throws RemoteException,
 			NotBoundException;
-
+	
 	/**
 	 * Delete a coordinator to the system, using the parameters passed.
 	 *
@@ -74,4 +75,12 @@ public interface ActAdministrator extends ActAuthenticated {
 	 * @throws RemoteException Thrown if the server is offline
 	 */
 	public PtBoolean ieCoordinatorUpdated() throws RemoteException;	
+	
+	/**
+	 * Dataset of quality estimates
+	 *
+	 * @return The current quality dataset
+	 * @throws RemoteException Thrown if the server is offline
+	 */
+	public DtQualityDataset getQualityDataset() throws RemoteException, NotBoundException;
 }

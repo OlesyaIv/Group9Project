@@ -54,7 +54,7 @@ public class DbCoordinators extends DbAbstract{
 				String pwd =  aCtCoordinator.pwd.value.getValue();
 				String phn =  aCtCoordinator.phn.value.getValue();
 	
-				log.debug("[DATABASE]-Insert coordinator");
+				log.debug("[DATABASE]-Insert coordinator" +id +" "+ login + " " +phn);
 				int val = st.executeUpdate("INSERT INTO "+ dbName+ ".coordinators" +
 											"(id,login,pwd,phn)" + 
 											"VALUES("+"'"+id+"'"+",'"+login+"','"+pwd+"','"+phn+"')");
