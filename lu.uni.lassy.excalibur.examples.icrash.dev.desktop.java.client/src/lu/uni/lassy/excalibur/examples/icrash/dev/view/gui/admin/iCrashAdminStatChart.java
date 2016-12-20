@@ -27,7 +27,6 @@ public class iCrashAdminStatChart extends JDialog {
 	double sat;
 	double maince;
 	double time;
-	Button but;
 
 	public iCrashAdminStatChart(String applicationTitle, String chartTitle, DtQualityDataset aDtQualityDataset) {
 		super();
@@ -35,13 +34,11 @@ public class iCrashAdminStatChart extends JDialog {
 		dataset.addValue(aDtQualityDataset.satisfaction.getValue(), satisfaction, period);
 		dataset.addValue(aDtQualityDataset.maintenance.getValue(), maintenance, period);
 		dataset.addValue(aDtQualityDataset.timeout.getValue(), timeout, period);
-		but = new Button("Refresh");
 		barChart = ChartFactory.createBarChart(chartTitle, "Category", "Score", dataset, PlotOrientation.VERTICAL, true,
 				true, false);
 		ChartPanel chartPanel = new ChartPanel(barChart);
 		// chartPanel.setLayout(new GridLayout());
 		chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
-		chartPanel.add(but);
 		setContentPane(chartPanel);
 
 	}

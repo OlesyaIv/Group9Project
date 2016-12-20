@@ -1249,7 +1249,7 @@ public class IcrashSystemImpl extends UnicastRemoteObject implements IcrashSyste
 					theActCoordinator.ieMessage(aMessage);
 
 					DtSMS sms = new DtSMS(
-							new PtString("Your crisis is solved and closed. Please, give to us your quality ensurance "
+							new PtString("Your crisis is solved and closed. Please, give to us your quality insurance "
 									+ "at three points: satisfaction, maintenance, timeout. Use three digits, for example: 435. Thank you!"));
 					getAllActComCompanies().get(0).ieSmsSend(human.id, sms);
 
